@@ -1,0 +1,19 @@
+{
+  "name": "cassettator-forbidden-adventures",
+  "version": "1.0.0",
+  "description": "🦸 The Fobidden Adventures of Cassettator, a hero too little known",
+  "scripts": {
+    "dev": "npx http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amtins/cassettator-forbidden-adventures.git"
+  },
+  "keywords": [],
+  "author": "amtins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amtins/cassettator-forbidden-adventures/issues"
+  },
+  "homepage": "https://github.com/amtins/cassettator-forbidden-adventures#readme"
+}

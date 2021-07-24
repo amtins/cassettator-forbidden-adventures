@@ -1,0 +1,233 @@
+* {
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes opacitator {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+body {
+    background-color: #111;
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+
+    margin: 0;
+
+    font-family: sans-serif;
+}
+
+h1,
+h2 {
+    margin: 10px;
+    width: 640px;
+}
+
+label {
+    margin-top: 5px;
+}
+
+select {
+    background: #111;
+    border: #333 solid 1px;
+    cursor: pointer;
+
+    padding: 3px;
+
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+pre {
+    background: #222;
+
+    width: 640px;
+
+    padding: 10px;
+
+    color: greenyellow;
+}
+
+details {
+    width: 640px;
+    margin: 10px 0;
+}
+
+details[open] summary~* {
+    animation: opacitator .5s ease-in-out;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 10px;
+    font-size: 65px;
+}
+
+.cassetator-hero {
+    all: unset;
+
+    cursor: pointer;
+}
+
+.cassettator.video-js {
+    border-radius: 5px;
+    box-shadow: #444 0 0 8px;
+
+    font-size: 15px;
+}
+
+.video-js.vjs-big-play-centered .vjs-big-play-button {
+    border: none;
+    background-color: #222a;
+    box-shadow: 0px 0px 4px #000;
+
+    height: 1.5em;
+    width: 1.5em;
+
+    margin-left: -.75em;
+
+    line-height: 1.5em;
+}
+
+.video-js.vjs-big-play-centered:hover .vjs-big-play-button {
+    background-color: #333a;
+}
+
+.video-js.vjs-big-play-centered .vjs-control-bar {
+    background: #222a;
+
+    width: calc(100% - 20px);
+
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+
+.cassettator.video-js .vjs-error-display {
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.cassettator.video-js .vjs-error-display:before {
+    content: "X";
+
+    position: initial;
+
+    border: solid 3px white;
+    border-radius: 50%;
+
+    width: 1.4em;
+
+    margin: 0;
+    padding: .2em;
+
+    color: white;
+    line-height: 1;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: none;
+}
+
+.cassettator .vjs-modal-dialog.vjs-text-track-settings {
+    background: none;
+    background-color: #000d;
+
+    height: 100%;
+}
+
+.cassettator .vjs-text-track-settings fieldset {
+    display: flex;
+}
+
+.cassettator .vjs-track-setting>select {
+    margin-right: 1em;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+.cassettator .vjs-text-track-settings fieldset span>select {
+    font-size: 1em;
+}
+
+.cassettator .vjs-track-settings-controls button {
+    background: #111;
+    border-radius: 5px;
+
+    padding: 5px 10px;
+
+    color: #fff;
+}
+
+.cassettator .vjs-track-settings-controls button:hover {
+    background: #fff;
+
+    color: #111;
+}
+
+.vjs-error .vjs-error-display .vjs-modal-dialog-content {
+    height: auto;
+    width: auto;
+    position: initial;
+    margin: 0 0 0 1em;
+    padding: 0;
+}
+
+.resource {
+    display: flex;
+    margin-top: 5px;
+}
+
+.resource__url {
+    border: none;
+    border-radius: 5px 0 0 5px;
+
+    width: 440px;
+
+    padding: 10px;
+}
+
+.resource__mime-type {
+    border-radius: 0;
+    font-size: 1em;
+    width: 100px;
+    padding-left: 5px;
+    background: #333;
+}
+
+.resource__submit {
+    background: #333;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+
+    width: 100px;
+    height: 36px;
+
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    text-transform: capitalize;
+}

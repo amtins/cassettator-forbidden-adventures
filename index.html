@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦸 Cassettator Forbidden Adventures</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script type="module">
+        The internet is sweet
+        import 'https://unpkg.com/video.js@7.4.2/dist/video.js';
+    </script> -->
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <h1>📼 video.js version <select name="versions" class="versions"></select></h1>
+    <video playsinline="playsinline" width="640" height="360" id="player" controls muted
+        class="cassettator video-js vjs-big-play-centered vjs-show-big-play-button-on-pause player"></video>
+
+    <div class="resource">
+        <input type="url" class="resource__url" name="resource__url" placeholder="http://my.source/master.m3u8">
+        <select name="versions" class="resource__mime-type">
+            <option value="application/x-mpegURL">HLS</option>
+            <option value="application/dash+xml">DASH</option>
+            <option value="">📼</option>
+        </select>
+
+        <button class="resource__submit" type="submit">load</button>
+    </div>
+    <details>
+        <summary>Super power activation</summary>
+        <div>Cassetator is still working on his super powers...</div>
+    </details>
+    <h2>VHS</h2>
+    <pre>
+
+    </pre>
+    <footer>
+        <button class="cassetator-hero" title="Cassettator The Greatest Superhero Of All Time">🦸</button>
+        <audio src="super-power-activation.mp3"></audio>
+    </footer>
+</body>
+
+</html>
