@@ -114,7 +114,7 @@ let player = undefined;
         player.poster('http://lorempixel.com/640/360/abstract/');
         player.src(source);
         
-        $('pre').innerText = JSON.stringify(videojs.VhsHandler.version(), null, 2);
+        $('pre').innerText = JSON.stringify(videojs?.VhsHandler?.version() || videojs.HlsSourceHandler.VERSION, null, 2);
         $('.versions').addEventListener('change', () => unitedState('version', $('.versions').value, true));
         $('.resource__url').addEventListener('input', () => mimeTypeSelector($('.resource__url').value));
         $('.resource__submit').addEventListener('click', ()=> {
