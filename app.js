@@ -65,8 +65,10 @@ const unitedState = (key, value, reload = false) => {
 }
 
 const mimeTypeFinder = (mimeType) => {
-    if (mimeType.match(/\.(mpd|m3u8)$/)) {
-        return mimeType.endsWith('mpd') ? 'DASH' : 'HLS';
+    const [type] = mimeType.match(/mpd|m3u8/) || [];
+
+    if (type) {
+        return type.endsWith('mpd') ? 'DASH' : 'HLS';
     }
 
     return '📼';
