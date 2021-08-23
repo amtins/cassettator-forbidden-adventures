@@ -243,3 +243,35 @@ footer {
     font-size: 15px;
     text-transform: capitalize;
 }
+
+.drm__checkbox {
+    margin: 10px 0;
+    display: inline-block;
+}
+
+.drm__vendors {
+    display: none;
+}
+
+.drm__vendors--show {
+    display: flex;
+    flex-direction: column;
+}
+
+.drm__certificate-label, .drm__license-label {
+    display: flex;
+    flex-direction: column;
+
+    margin: 10px 0;
+}
+
+.drm__vendors input[type="text"] {
+    border: none;
+
+    margin-top: 5px;
+    padding: 10px;
+}
+
+.hide {
+    display: none;
+}

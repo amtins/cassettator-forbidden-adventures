@@ -41,16 +41,28 @@ const videojsCssLoader = (version) => {
 }
 
 const videojsScriptLoader = (version, callback) => {
-    const script = document.createElement('script');
+    const videojsScript = document.createElement('script');
     const src = `https://unpkg.com/video.js${version}/dist/video.js`;
 
-    script.async = true;
-    script.defer = 'defer';
-    script.src = src;
-    script.type = 'text/javascript';
-    script.onload = callback;
+    videojsScript.async = true;
+    videojsScript.defer = 'defer';
+    videojsScript.src = src;
+    videojsScript.type = 'text/javascript';
+    videojsScript.onload = callback;
 
-    document.body.appendChild(script);
+    document.body.appendChild(videojsScript);
+}
+
+const emeScriptLoader = (callback) => {
+    const emeScript = document.createElement('script');
+
+    emeScript.async = true;
+    emeScript.defer = 'defer';
+    emeScript.src = 'https://cdn.jsdelivr.net/npm/videojs-contrib-eme@3.4.1/dist/videojs-contrib-eme.js';
+    emeScript.type = 'text/javascript';
+    emeScript.onload = callback;
+
+    document.body.appendChild(emeScript);
 }
 
 const unitedState = (key, value, reload = false) => {
@@ -81,6 +93,25 @@ const mimeTypeSelector = (mimeType) => {
         .selected = true;
 }
 
+const drmFinder = () => {
+    if (!$('#enable-drm').checked) {
+        return;
+    }
+
+    if ($('#drm-select').selectedIndex === 1) {
+        return {
+            "com.apple.fps.1_0": {
+                certificateUri: $("#certificate").value,
+                licenseUri: $("#license").value
+            }
+        };
+    }
+
+    return {
+        "com.widevine.alpha": $("#license").value
+    };
+}
+
 let player = undefined;
 
 (async (x) => {
@@ -98,37 +129,58 @@ let player = undefined;
     versionOptions(versions, defaultVersion);
     videojsCssLoader(defaultVersion);
     videojsScriptLoader(defaultVersion, () => {
-        const options = {
-            liveui: true,
-            liveTracker: {
-                trackingThreshold: 120,
-                liveTolerance: 30,
-            },
-        };
-        const source = {
-            src: mediaSource ? mediaSource : 'https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd',
-            type: mediaSource ? $('.resource__mime-type').value : 'application/dash+xml'
-        };
+        emeScriptLoader(() => {
+            const options = {
+                liveui: true,
+                liveTracker: {
+                    trackingThreshold: 120,
+                    liveTolerance: 30,
+                },
+            };
+            const source = {
+                src: mediaSource ? mediaSource : 'https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd',
+                type: mediaSource ? $('.resource__mime-type').value : 'application/dash+xml',
+                keySystems: drmFinder(),
+            };
 
-        player = new videojs('player', options);
+            player = new videojs('player', options);
 
-        
-        player.poster('http://lorempixel.com/640/360/abstract/');
-        player.src(source);
-        
-        $('pre').innerText = JSON.stringify(videojs?.VhsHandler?.version() || videojs.HlsSourceHandler.VERSION, null, 2);
-        $('.versions').addEventListener('change', () => unitedState('version', $('.versions').value, true));
-        $('.resource__url').addEventListener('input', () => mimeTypeSelector($('.resource__url').value));
-        $('.resource__submit').addEventListener('click', ()=> {
-            const url = $('.resource__url').value;
-            
-            if (url) {
-                mimeTypeSelector(url);
-                unitedState('url', url);
 
-                player.src({ src: url, type: $('.resource__mime-type').value });
-            }
+            player.eme();
+            player.poster('http://lorempixel.com/640/360/abstract/');
+            player.src(source);
+
+            $('pre').innerText = JSON.stringify(videojs?.VhsHandler?.version() || videojs.HlsSourceHandler.VERSION, null, 2);
+            $('.versions').addEventListener('change', () => unitedState('version', $('.versions').value, true));
+            $('.resource__url').addEventListener('input', () => mimeTypeSelector($('.resource__url').value));
+            $('.resource__submit').addEventListener('click', () => {
+                const url = $('.resource__url').value;
+
+                if (url) {
+                    mimeTypeSelector(url);
+                    unitedState('url', url);
+
+                    player.src({ src: url, type: $('.resource__mime-type').value, keySystems: drmFinder() });
+                    console.log('currentSource', player.currentSource());
+                }
+            });
+            $('.cassetator-hero').addEventListener('click', () => superPowerActivation.play());
+            $('#enable-drm').addEventListener('change', () => {
+                if ($('#enable-drm').checked) {
+                    $('.drm__vendors').classList.add('drm__vendors--show');
+                    return;
+                }
+
+                $('.drm__vendors').classList.remove('drm__vendors--show');
+            });
+            $('#drm-select').addEventListener('change', () => {
+                if ($('#drm-select').selectedIndex === 1) {
+                    $('.drm__certificate-label').classList.remove('hide');
+                    return;
+                }
+
+                $('.drm__certificate-label').classList.add('hide');
+            });
         });
-        $('.cassetator-hero').addEventListener('click', () => superPowerActivation.play());
     });
 })();

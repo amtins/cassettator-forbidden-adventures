@@ -30,7 +30,20 @@
     </div>
     <details>
         <summary>Super power activation</summary>
-        <div>Cassetator is still working on his super powers...</div>
+
+        <div>
+            <label class="drm__checkbox" for="enable-drm">Enable DRM <input type="checkbox" id="enable-drm"></label>
+            <section class="drm__vendors">
+                <select name="drm" id="drm-select">
+                    <option value="com.widevine.alpha">Widevine</option>
+                    <option value="com.apple.fps.1_0">Fairplay</option>
+                </select>
+
+                <label class="drm__certificate-label hide">Certificate <input type="text" id="certificate"
+                        placeholder="URL"></label>
+                <label class="drm__license-label">License <input type="text" id="license" placeholder="URL"></label>
+            </section>
+        </div>
     </details>
     <h2>VHS</h2>
     <pre>
