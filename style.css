@@ -275,3 +275,7 @@ footer {
 .hide {
     display: none;
 }
+
+.ko {
+    color: coral;
+}
