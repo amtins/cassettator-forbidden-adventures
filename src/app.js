@@ -133,6 +133,7 @@ let player = undefined;
                     trackingThreshold: 120,
                     liveTolerance: 30,
                 },
+                responsive: true,
             };
             const source = {
                 src: mediaSource ? mediaSource : 'https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd',
