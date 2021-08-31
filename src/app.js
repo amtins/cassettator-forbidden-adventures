@@ -109,6 +109,72 @@ const drmFinder = () => {
     };
 }
 
+const drmCleanator = (clean) => {
+    if (clean) {
+        $('#license').value = '';
+        $('#certificate').value = '';
+
+        const location = new URL(window.location.href)
+        const url = location.searchParams.get('url');
+        const version = location.searchParams.get('version');
+
+        window.history.pushState({}, null, '/');
+
+        unitedState('url', url);
+        unitedState('version', version);
+    }
+}
+
+const drmSaveator = () => {
+    if (!$('#enable-drm').checked) {
+        drmCleanator(!$('#enable-drm').checked);
+
+        return;
+    };
+
+    const vendor = Array.from($$('#drm-select option')).find(option => option.selected).label;
+    const license = $('#license').value;
+    const certificate = $('#certificate').value;
+
+    if (vendor) {
+        unitedState('drm-vendor', vendor);
+    }
+
+    if (license.trim().length) {
+        unitedState('drm-license', license);
+    }
+
+    if (certificate.trim().length) {
+        unitedState('drm-certificate', certificate);
+    }
+};
+
+const drmRestorator = (vendor, license, certificate) => {
+    if (!vendor && !licence) return;
+
+    if (vendor) {
+        $('details').open = true;
+        $('#enable-drm').checked = true;
+
+        setTimeout(() => {
+            $('#enable-drm').dispatchEvent(new Event('change'));
+        }, 0);
+
+        Array
+            .from($$('#drm-select option'))
+            .find(option => option.label === vendor)
+            .selected = true;
+    }
+
+    if (license) {
+        $('#license').value = license;
+    }
+
+    if (certificate) {
+        $('#certificate').value = certificate;
+    }
+}
+
 let player = undefined;
 
 (async () => {
@@ -116,6 +182,9 @@ let player = undefined;
     const url = new URL(location.toString());
     const defaultVersion = url.searchParams.has('version') ? `@${url.searchParams.get('version')}` : `@${versions[0]}`;
     const mediaSource = url.searchParams.has('url') ? url.searchParams.get('url') : undefined;
+    const drmVendor = url.searchParams.has('drm-vendor') ? url.searchParams.get('drm-vendor') : undefined;
+    const drmLicense = url.searchParams.has('drm-license') ? url.searchParams.get('drm-license') : undefined;
+    const drmCertificate = url.searchParams.has('drm-certificate') ? url.searchParams.get('drm-certificate') : undefined;
     const superPowerActivation = $('audio');
 
     if (mediaSource) {
@@ -127,6 +196,10 @@ let player = undefined;
     videojsCssLoader(defaultVersion);
     videojsScriptLoader(defaultVersion, () => {
         emeScriptLoader(() => {
+            if (drmVendor) {
+                drmRestorator(drmVendor, drmLicense, drmCertificate);
+            }
+
             const options = {
                 liveui: true,
                 liveTracker: {
@@ -157,6 +230,7 @@ let player = undefined;
                 if (url) {
                     mimeTypeSelector(url);
                     unitedState('url', url);
+                    drmSaveator();
 
                     player.src({ src: url, type: $('.resource__mime-type').value, keySystems: drmFinder() });
                     console.log('currentSource', player.currentSource());
