@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦸 Cassettator Forbidden Adventures</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <video playsinline="playsinline" id="player" controls autoplay
+        class="player" width="640" height="480"></video>
+
+    <button class="btn">Load src</button>
+    <script>
+        const player = document.querySelector('#player');
+        const bnt = document.querySelector('.btn');
+        player.src = 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8';
+        
+        bnt.addEventListener('click', () =>{
+            player.src = 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8';
+        });
+
+    </script>
+</body>
+
+</html>
