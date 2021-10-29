@@ -118,7 +118,7 @@ const drmCleanator = (clean) => {
         const url = location.searchParams.get('url');
         const version = location.searchParams.get('version');
 
-        window.history.pushState({}, null, '/');
+        window.history.pushState({}, null, url.pathName);
 
         unitedState('url', url);
         unitedState('version', version);
