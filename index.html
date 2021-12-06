@@ -15,12 +15,22 @@
 </head>
 
 <body>
-    <h1><a class="the-cassette" href="https://github.com/amtins/cassettator-forbidden-adventures">📼</a> video.js version <select name="versions" class="versions"></select></h1>
+    <h1><a class="the-cassette" href="https://github.com/amtins/cassettator-forbidden-adventures">📼</a> video.js
+        version <select name="versions" class="versions"></select></h1>
     <video playsinline="playsinline" id="player" controls muted
         class="cassettator video-js vjs-big-play-centered vjs-show-big-play-button-on-pause player"></video>
 
     <div class="resource">
-        <input type="url" class="resource__url" name="resource__url" placeholder="http://my.source/master.m3u8">
+        <input type="url" list="cassette-flavors" class="resource__url" name="resource__url"
+            placeholder="http://my.source/master.m3u8">
+        <datalist id="cassette-flavors">
+            <option selected value="https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8">🍏
+                Bipbop</option>
+            <option value="https://cdn.theoplayer.com/video/big_buck_bunny_encrypted/stream-800/index-dvr.m3u8">Theo HLS
+                DVR live stream</option>
+            <option value="https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd">Dash live stream</option>
+        </datalist>
+
         <select name="versions" class="resource__mime-type">
             <option value="">📼</option>
             <option value="application/x-mpegURL">HLS</option>

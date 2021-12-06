@@ -208,8 +208,8 @@ let player = undefined;
                 responsive: true,
             };
             const source = {
-                src: mediaSource ? mediaSource : 'https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd',
-                type: mediaSource ? $('.resource__mime-type').value : 'application/dash+xml',
+                src: mediaSource ? mediaSource : $('datalist option').value,
+                type: mediaSource ? $('.resource__mime-type').value : 'application/x-mpegURL',
                 keySystems: drmFinder(),
             };
 
