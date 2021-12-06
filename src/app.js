@@ -64,12 +64,27 @@ const emeScriptLoader = (callback) => {
 
 const unitedState = (key, value, reload = false) => {
     const url = new URL(window.location.href);
-    url.searchParams.set(key, value);
+
+    if (key && value) {
+        url.searchParams.set(key, value);
+    }
 
     window.history.pushState(null, null, url);
 
     if (reload) {
         window.location = url;
+    }
+}
+
+const unitedStateCleaner = (...keys) => {
+    if (keys) {
+        const location = new URL(window.location.href);
+
+        keys.forEach((key) => {
+            location.searchParams.delete(key);
+        });
+
+        history.replaceState(null, null, location);
     }
 }
 
@@ -114,14 +129,7 @@ const drmCleanator = (clean) => {
         $('#license').value = '';
         $('#certificate').value = '';
 
-        const location = new URL(window.location.href)
-        const url = location.searchParams.get('url');
-        const version = location.searchParams.get('version');
-
-        window.history.pushState({}, null, url.pathName);
-
-        unitedState('url', url);
-        unitedState('version', version);
+        unitedStateCleaner('drm-vendor', 'drm-license', 'drm-certificate');
     }
 }
 
