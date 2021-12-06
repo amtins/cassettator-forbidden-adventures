@@ -65,7 +65,7 @@ const emeScriptLoader = (callback) => {
 const unitedState = (key, value, reload = false) => {
     const url = new URL(window.location.href);
 
-    if (key && value) {
+    if (key && value && value.trim()) {
         url.searchParams.set(key, value);
     }
 
@@ -124,18 +124,16 @@ const drmFinder = () => {
     };
 }
 
-const drmCleanator = (clean) => {
-    if (clean) {
-        $('#license').value = '';
-        $('#certificate').value = '';
+const drmCleanator = () => {
+    $('#license').value = '';
+    $('#certificate').value = '';
 
-        unitedStateCleaner('drm-vendor', 'drm-license', 'drm-certificate');
-    }
+    unitedStateCleaner('drm-vendor', 'drm-license', 'drm-certificate');
 }
 
 const drmSaveator = () => {
     if (!$('#enable-drm').checked) {
-        drmCleanator(!$('#enable-drm').checked);
+        drmCleanator();
 
         return;
     };
@@ -144,17 +142,10 @@ const drmSaveator = () => {
     const license = $('#license').value;
     const certificate = $('#certificate').value;
 
-    if (vendor) {
-        unitedState('drm-vendor', vendor);
-    }
 
-    if (license.trim().length) {
-        unitedState('drm-license', license);
-    }
-
-    if (certificate.trim().length) {
-        unitedState('drm-certificate', certificate);
-    }
+    unitedState('drm-vendor', vendor);
+    unitedState('drm-license', license);
+    unitedState('drm-certificate', certificate);
 };
 
 const drmRestorator = (vendor, license, certificate) => {
