@@ -133,6 +133,17 @@ footer {
     bottom: 10px;
 }
 
+.cassettator .vjs-menu-button-popup .vjs-menu .vjs-menu-content {
+    background-color: #222e;
+}
+
+.cassettator .vjs-menu li.vjs-menu-item:focus,
+.cassettator .vjs-menu li.vjs-menu-item:hover,
+.cassettator .js-focus-visible .vjs-menu li.vjs-menu-item:hover {
+    background-color: #555a;
+    color: white;
+}
+
 .cassettator.video-js .vjs-error-display {
     display: flex;
     align-items: center;
@@ -262,7 +273,8 @@ footer {
     flex-direction: column;
 }
 
-.drm__certificate-label, .drm__license-label {
+.drm__certificate-label,
+.drm__license-label {
     display: flex;
     flex-direction: column;
 
