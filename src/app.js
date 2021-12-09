@@ -179,6 +179,7 @@ let player = undefined;
 (async () => {
     const versions = await videojsVersions();
     const url = new URL(location.toString());
+    const autoplay = url.searchParams.has('autoplay') ? url.searchParams.get('autoplay'): undefined;
     const defaultVersion = url.searchParams.has('version') ? `@${url.searchParams.get('version')}` : `@${versions[0]}`;
     const mediaSource = url.searchParams.has('url') ? url.searchParams.get('url') : undefined;
     const drmVendor = url.searchParams.has('drm-vendor') ? url.searchParams.get('drm-vendor') : undefined;
@@ -215,10 +216,13 @@ let player = undefined;
 
             player = new videojs('player', options);
 
-
             player.eme();
             player.poster('http://lorempixel.com/640/360/abstract/');
             player.src(source);
+
+            if(autoplay){
+                player.autoplay(autoplay);
+            }
 
             $('.vhs').innerText = JSON.stringify(videojs?.VhsHandler?.version() || videojs.HlsSourceHandler.VERSION, null, 2);
             $('.versions').addEventListener('change', () => unitedState('version', $('.versions').value, true));
