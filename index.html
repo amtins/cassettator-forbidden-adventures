@@ -15,8 +15,9 @@
 </head>
 
 <body>
-    <h1><a class="the-cassette" href="https://github.com/amtins/cassettator-forbidden-adventures">📼</a> video.js
-        version <select name="versions" class="versions"></select></h1>
+    <h1><a class="the-cassette" aria-label="GitHub repository link"
+            href="https://github.com/amtins/cassettator-forbidden-adventures">📼</a> video.js
+        version <select name="versions" class="versions" aria-label="Videojs version selector"></select></h1>
     <video playsinline="playsinline" id="player" controls muted
         class="cassettator video-js vjs-big-play-centered vjs-show-big-play-button-on-pause player"></video>
 
@@ -28,10 +29,11 @@
                 Bipbop</option>
             <option value="https://cdn.theoplayer.com/video/big_buck_bunny_encrypted/stream-800/index-dvr.m3u8">Theo HLS
                 DVR live stream</option>
-            <option value="https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd">Dash live stream</option>
+            <option value="https://wowzaec2demo.streamlock.net/live/bigbuckbunny/manifest_mpm4sav_mvtime.mpd">Dash live
+                stream</option>
         </datalist>
 
-        <select name="versions" class="resource__mime-type">
+        <select name="versions" class="resource__mime-type" aria-label="Mime type selector">
             <option value="">📼</option>
             <option value="application/x-mpegURL">HLS</option>
             <option value="application/dash+xml">DASH</option>
@@ -45,7 +47,7 @@
         <div>
             <label class="drm__checkbox" for="enable-drm">Enable DRM <input type="checkbox" id="enable-drm"></label>
             <section class="drm__vendors">
-                <select name="drm" id="drm-select">
+                <select name="drm" id="drm-select" aria-label="DRM vendor selector">
                     <option value="com.widevine.alpha">Widevine</option>
                     <option value="com.apple.fps.1_0">Fairplay</option>
                 </select>
