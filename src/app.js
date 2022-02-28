@@ -1,3 +1,5 @@
+import loadator from "./loadator.js";
+
 const videojsVersions = () => {
     return fetch('https://api.cdnjs.com/libraries/video.js?fields=versions,latest')
         .then(response => response.json())
@@ -25,41 +27,6 @@ const versionOptions = (versions = [], defaultVersion) => {
     if (versions.length) {
         $('.versions').appendChild(fragment);
     }
-}
-
-const videojsCssLoader = (version) => {
-    const link = document.createElement('link');
-    const css = `https://unpkg.com/video.js${version}/dist/video-js.css`;
-
-    link.rel = 'stylesheet';
-    link.href = css;
-
-    document.head.appendChild(link);
-}
-
-const videojsScriptLoader = (version, callback) => {
-    const videojsScript = document.createElement('script');
-    const src = `https://unpkg.com/video.js${version}/dist/video.js`;
-
-    videojsScript.async = true;
-    videojsScript.defer = 'defer';
-    videojsScript.src = src;
-    videojsScript.type = 'text/javascript';
-    videojsScript.onload = callback;
-
-    document.body.appendChild(videojsScript);
-}
-
-const emeScriptLoader = (callback) => {
-    const emeScript = document.createElement('script');
-
-    emeScript.async = true;
-    emeScript.defer = 'defer';
-    emeScript.src = 'https://cdn.jsdelivr.net/npm/videojs-contrib-eme@3.9.0/dist/videojs-contrib-eme.js';
-    emeScript.type = 'text/javascript';
-    emeScript.onload = callback;
-
-    document.body.appendChild(emeScript);
 }
 
 const unitedState = (key, value, reload = false) => {
@@ -174,12 +141,12 @@ const drmRestorator = (vendor, license, certificate) => {
     }
 }
 
-let player = undefined;
+window.player = undefined;
 
 (async () => {
     const versions = await videojsVersions();
     const url = new URL(location.toString());
-    const autoplay = url.searchParams.has('autoplay') ? url.searchParams.get('autoplay'): undefined;
+    const autoplay = url.searchParams.has('autoplay') ? url.searchParams.get('autoplay') : undefined;
     const defaultVersion = url.searchParams.has('version') ? `@${url.searchParams.get('version')}` : `@${versions[0]}`;
     const mediaSource = url.searchParams.has('url') ? url.searchParams.get('url') : undefined;
     const drmVendor = url.searchParams.has('drm-vendor') ? url.searchParams.get('drm-vendor') : undefined;
@@ -193,9 +160,24 @@ let player = undefined;
     }
 
     versionOptions(versions, defaultVersion);
-    videojsCssLoader(defaultVersion);
-    videojsScriptLoader(defaultVersion, () => {
-        emeScriptLoader(() => {
+
+    const scripts = [{
+        type: 'js',
+        url: `https://unpkg.com/video.js${defaultVersion}/dist/video.js`
+    },
+    {
+        type: 'css',
+        url: `https://unpkg.com/video.js${defaultVersion}/dist/video-js.css`
+    },
+    {
+        type: 'js',
+        url: 'https://unpkg.com/videojs-contrib-eme@3.9.0/dist/videojs-contrib-eme.js'
+    }];
+
+    loadator(scripts)
+        .then((result) => {
+            console.log('LOADATORATION SUCCEEDED', result);
+
             if (drmVendor) {
                 drmRestorator(drmVendor, drmLicense, drmCertificate);
             }
@@ -217,10 +199,12 @@ let player = undefined;
             player = new videojs('player', options);
 
             player.eme();
-            player.poster('http://lorempixel.com/640/360/abstract/');
+            // FROM: https://www.deviantart.com/henflay/art/Captain-Atom-281685997
+            // By: https://www.deviantart.com/henflay
+            player.poster('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/3cce611d-ff6e-4e94-a826-e1af3acde2ab/d4npib1-bc8051db-b938-41bd-8cc9-8112c9092a4c.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzNjY2U2MTFkLWZmNmUtNGU5NC1hODI2LWUxYWYzYWNkZTJhYlwvZDRucGliMS1iYzgwNTFkYi1iOTM4LTQxYmQtOGNjOS04MTEyYzkwOTJhNGMuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Ai3KsicdMuK9Nvoj-WzY9sHOE22hwfaA0bq-KvOPfGE');
             player.src(source);
 
-            if(autoplay){
+            if (autoplay) {
                 player.autoplay(autoplay);
             }
 
@@ -258,6 +242,6 @@ let player = undefined;
 
                 $('.drm__certificate-label').classList.add('hide');
             });
-        });
-    });
+        })
+        .catch((error) => console.log('LOADATORATION ABSOLUT FAILED', error))
 })();
