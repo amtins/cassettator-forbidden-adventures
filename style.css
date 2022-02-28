@@ -210,6 +210,32 @@ footer {
     color: #111;
 }
 
+.cassettator .vjs-menu .vjs-menu-content {
+    padding: 5px;
+}
+
+.cassettator .vjs-menu li {
+    padding: 0.2em;
+    font-size: 1em;
+    text-align: left;
+    border-bottom: 1px dotted darkgray;
+}
+
+.cassettator .vjs-menu li:last-child {
+    border-bottom: none;
+}
+
+.cassettator .vjs-menu li.vjs-menu-title {
+    border-bottom: none;
+}
+
+.cassettator .vjs-menu-item.vjs-texttrack-settings {
+    border-bottom: solid 1px darkgray;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .vjs-error .vjs-error-display .vjs-modal-dialog-content {
     height: auto;
     width: auto;
