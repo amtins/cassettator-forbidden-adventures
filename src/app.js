@@ -1,10 +1,28 @@
 import loadator from "./loadator.js";
 
+//https://medium.com/geekculture/sorting-an-array-of-semantic-versions-in-typescript-55d65d411df2
+const versionsComparator = (a, b) => {
+    const a1 = a.split('.');
+    const b1 = b.split('.');
+    const len = Math.min(a1.length, b1.length);
+
+    for (let i = 0; i < len; i++) {
+        const a2 = +a1[i] || 0;
+        const b2 = +b1[i] || 0;
+
+        if (a2 !== b2) {
+            return a2 < b2 ? 1 : -1;
+        }
+    }
+
+    return a1.length - b1.length;
+};
+
 const videojsVersions = () => {
-    return fetch('https://api.cdnjs.com/libraries/video.js?fields=versions,latest')
+    return fetch('https://api.cdnjs.com/libraries/video.js?fields=versions,version,latest')
         .then(response => response.json())
         .then(({ versions }) => versions.filter((version) => version.startsWith('7')))
-        .then(versions => versions.reverse());
+        .then(versions => versions.sort(versionsComparator));
 }
 
 const versionOptions = (versions = [], defaultVersion) => {
