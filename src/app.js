@@ -19,9 +19,10 @@ const versionsComparator = (a, b) => {
 };
 
 const videojsVersions = () => {
-    return fetch('https://api.cdnjs.com/libraries/video.js?fields=versions,version,latest')
+    return fetch('https://registry.npmjs.org/video.js')
         .then(response => response.json())
-        .then(({ versions }) => versions.filter((version) => version.startsWith('7')))
+        .then(({ versions, ['dist-tags']: tags }) => ({ versions: Object.keys(versions), tags }))
+        .then(({ versions }) => versions.filter((version) => version.startsWith('7') || version.startsWith('8')))
         .then(versions => versions.sort(versionsComparator));
 }
 
