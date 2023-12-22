@@ -167,6 +167,7 @@ window.player = undefined;
     const url = new URL(location.toString());
     const autoplay = url.searchParams.has('autoplay') ? url.searchParams.get('autoplay') : undefined;
     const defaultVersion = url.searchParams.has('version') ? `@${url.searchParams.get('version')}` : `@${versions[0]}`;
+    const emeVersion = url.searchParams.has('eme') ? `@${url.searchParams.get('eme')}` : '@3.9.0';
     const mediaSource = url.searchParams.has('url') ? url.searchParams.get('url') : undefined;
     const drmVendor = url.searchParams.has('drm-vendor') ? url.searchParams.get('drm-vendor') : undefined;
     const drmLicense = url.searchParams.has('drm-license') ? url.searchParams.get('drm-license') : undefined;
@@ -190,7 +191,7 @@ window.player = undefined;
     },
     {
         type: 'js',
-        url: 'https://unpkg.com/videojs-contrib-eme@3.9.0/dist/videojs-contrib-eme.js'
+        url: `https://unpkg.com/videojs-contrib-eme${emeVersion}/dist/videojs-contrib-eme.js`
     }];
 
     loadator(scripts)
