@@ -240,8 +240,13 @@ window.player = undefined;
             }
 
             const { VhsHandler: { version = () => undefined } = {} } = videojs;
+            const vhs = version() || videojs.HlsSourceHandler.VERSION
+            const plugins = Object.values(videojs.getPlugins()).filter(plugin => plugin.VERSION).map((plugin) =>{
+                console.log(plugin)
+                return {[plugin.name] : plugin.VERSION}
+            });
 
-            $('.vhs').innerText = JSON.stringify(version() || videojs.HlsSourceHandler.VERSION, null, 2);
+            $('.video-js-config').innerText = JSON.stringify({vhs, plugins}, null, 2);
             $('.versions').addEventListener('change', () => unitedState('version', $('.versions').value, true));
             $('.resource__url').addEventListener('input', () => mimeTypeSelector($('.resource__url').value));
             $('.resource__submit').addEventListener('click', () => {
