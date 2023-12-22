@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "🦸 The Fobidden Adventures of Cassettator, a hero too little known",
   "scripts": {
-    "dev": "npx http-server"
+    "dev": "http-server -c-1"
   },
   "repository": {
     "type": "git",
