@@ -167,6 +167,7 @@ window.player = undefined;
     const url = new URL(location.toString());
     const autoplay = url.searchParams.has('autoplay') ? url.searchParams.get('autoplay') : undefined;
     const defaultVersion = url.searchParams.has('version') ? `@${url.searchParams.get('version')}` : `@${versions[0]}`;
+    const vhsVersion = url.searchParams.has('vhs') ? `@${url.searchParams.get('vhs')}` : undefined;
     const emeVersion = url.searchParams.has('eme') ? `@${url.searchParams.get('eme')}` : '@3.9.0';
     const mediaSource = url.searchParams.has('url') ? url.searchParams.get('url') : undefined;
     const drmVendor = url.searchParams.has('drm-vendor') ? url.searchParams.get('drm-vendor') : undefined;
@@ -193,6 +194,13 @@ window.player = undefined;
         type: 'js',
         url: `https://unpkg.com/videojs-contrib-eme${emeVersion}/dist/videojs-contrib-eme.js`
     }];
+
+    if(vhsVersion){
+        scripts.splice(1, 0, {
+            type: 'js',
+            url: `https://unpkg.com/@videojs/http-streaming${vhsVersion}/dist/videojs-http-streaming.js`
+        });
+    }
 
     loadator(scripts)
         .then((result) => {
