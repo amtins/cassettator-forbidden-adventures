@@ -217,6 +217,9 @@ window.player = undefined;
                     liveTolerance: 30,
                 },
                 responsive: true,
+                userActions: {
+                    hotkeys: true
+                },
             };
             const source = {
                 src: mediaSource ? mediaSource : $('datalist option').value,
